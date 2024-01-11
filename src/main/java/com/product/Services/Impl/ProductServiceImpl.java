@@ -4,11 +4,16 @@ import com.product.Dto.ListDto;
 import com.product.Dto.ProductDto;
 import com.product.Dto.UpdateDto;
 import com.product.Entity.Product;
+import com.product.Exception.ResourceNotFoundException;
 import com.product.Services.ProductService;
 import com.product.repository.ProductRepository;
+import org.apache.logging.log4j.message.Message;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -84,9 +89,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateRecord(Long id, Product pdt) {
-        Product product = productRepo.findById(id).get();
-        return product;
+    public Optional<Product> findById(long id) {
+        Optional<Product> findById = productRepo.findById(id);
+        if(findById.isPresent()){
+            productRepo.deleteById(id);
+
+        }else {
+            throw new ResourceNotFoundException("ResourceNotFound With this Id : "+id);
+        }
+        return null;
+
     }
 
 

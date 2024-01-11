@@ -2,10 +2,10 @@ package com.product.Services;
 
 import com.product.Dto.ListDto;
 import com.product.Dto.ProductDto;
-import com.product.Dto.UpdateDto;
 import com.product.Entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
@@ -21,6 +21,6 @@ public interface ProductService {
 
     public Product updateRecord(long id , Product pdt);
 
-    public Product updateRecord(Long id , Product pdt);
 
+  public Optional<Product> findById(long id);
 }

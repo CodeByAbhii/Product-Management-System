@@ -3,12 +3,14 @@ package com.product.Controller;
 import com.product.Dto.ListDto;
 import com.product.Dto.ProductDto;
 import com.product.Entity.Product;
+import com.product.Exception.ResourceNotFoundException;
 import com.product.Services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 // http://localhost8080/api/product
 @RequestMapping("/api/product")
@@ -33,8 +35,14 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?>deleteById(@PathVariable long id){
+    Optional<Product> findById = pdtService.findById(id);
+    if(findById.isPresent()){
         pdtService.deleteById(id);
-        return  new ResponseEntity<>("Record is deleted!!" ,HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Record is deleted!!" , HttpStatus.INTERNAL_SERVER_ERROR);
+    }else {
+        throw new ResourceNotFoundException("ResourceNotFound With this Id : "+id);
+    }
+
     }
 
     @PutMapping
