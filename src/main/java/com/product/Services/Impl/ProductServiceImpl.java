@@ -101,5 +101,22 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    @Override
+    public ProductDto getProductById(long id) {
+        Product product = productRepo.findById(id).orElseThrow(
+
+                ()->new ResourceNotFoundException("Product Not Found with the Id :"+id)
+
+
+        );
+        ProductDto pddto = new ProductDto();
+
+        pddto.setProduct(product.getProduct());
+        pddto.setCategory(product.getCategory());
+        pddto.setPrice(product.getPrice());
+        pddto.setDescription(product.getDescription());
+        return pddto;
+    }
+
 
 }

@@ -60,4 +60,10 @@ public class ProductController {
         dto.setMessage("Reading is Completed!!");
         return  new ResponseEntity<>(dto , HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable long id){
+        ProductDto productById = pdtService.getProductById(id);
+        return  new ResponseEntity<>(productById , HttpStatus.OK);
+    }
 }

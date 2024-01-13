@@ -23,4 +23,6 @@ public interface ProductService {
 
 
   public Optional<Product> findById(long id);
+
+    ProductDto getProductById(long id);
 }
